@@ -1,0 +1,60 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #fff;
+}
+
+a {
+  color: #00B7FF;
+}
+
+footer{
+	height: 50px;
+	border-top: 1px solid #dedede;
+	padding: 5px 0px 15px 15px;
+	font-size: 13px;
+	color: #999;
+	position: absolute;
+	right: 0;
+	left: 0;
+}
+
+#wrap{
+  background: #f4f4f4;
+}
+
+/*RESET BOOTSTRAP*/
+.navbar{
+	margin-bottom: 0 !important;
+}
+
+/*LOGIN FORM*/
+.form-login-heading{
+  	margin: 0;
+  	padding: 20px 15px;
+  	text-align: center;
+	background: #00aeda;
+  	border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+  	color: #fff;
+  	font-size: 18px;
+  	text-transform: uppercase;
+}
+.form-login-content{
+  margin: 0;
+  padding: 20px;
+  background: #fff;
+
+}
+.text-center{
+	text-align: center;
+}
+.form-login-bottom{
+	background-color: #fff;
+	border-top: 1px solid #ddd;
+	clear: both;
+	padding: 14px;
+	border-radius: 0 0 4px 4px;
+}
+.check-remember{
+	padding-left: 20px;
+}

@@ -1,0 +1,40 @@
+<div class="row">
+  		<div class="col-xs-12 col-md-4"></div>
+  		<div class="col-xs-12 col-md-4" style="margin: 20px 0">
+  			<h2 class="form-login-heading">Hello</h2>
+  			
+			<form class="form-login-content" name="form" ng-submit="login()">
+				<div class="form-group">
+				  <label for="uname">User name</label>
+				  <input type="text" name="uname" class="form-control" required ng-model="userData.uname" placeholder="Enter user name">
+				</div>
+				<div class="form-group">
+				  <label for="password">Password</label>
+				  <input type="password" name="password" class="form-control" required ng-model="userData.password" placeholder="Enter password">
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-md-6">
+						<div class="checkbox check-remember">
+		                    <input id="checkbox" type="checkbox">
+		                    <label for="checkbox" style="font-weight: 700;">
+		                       Remember me
+		                    </label>
+		                </div>
+					</div>
+					<div class="col-xs-12 col-md-6">
+		                    <a ui-sref="forgotpwd" class="btn btn-forgot pull-right">Forgot Password?</a>
+		            </div>
+				</div>
+				
+				<div class="row">
+	                <div class="col-xs-12 col-md-12">
+	                    <button class="btn btn-success btn-block" type="submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i>LOGIN</button>
+	                </div>
+  				</div>
+			</form>
+			<div class="form-login-bottom text-center">
+				Don't have an account yet? <a ui-sref="register" class="btn-forgot"><b>Join Us</b></a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-4"></div>
+	</div>

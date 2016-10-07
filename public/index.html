@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="notes" >
+<head>
+	<title>Notes Manager</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	
+	<!-- CUSTOMIZE STYLE -->
+	<link rel="stylesheet" type='text/css' href="./css/style.css"/>
+
+
+	<!-- LIBRARY -->
+	<link rel="stylesheet" type='text/css' href="./libs/bootstrap/dist/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type='text/css' href="./libs/font-awesome/css/font-awesome.min.css"/>
+
+	<script src="./libs/angular/angular.js"></script>
+	<script src="./libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="./libs/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="./libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="./libs/angular-cookies/angular-cookies.min.js"></script>
+	<script src="./libs/angular-messages/angular-messages.min.js"></script>
+
+	<script src="./libs/jquery/dist/jquery.min.js"></script>
+	<script src="./libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- APP CODE -->	
+	<script src="js/app.js"></script>
+	<script src="js/appRouter.js"></script>
+	<script src="js/controller/baseCtrl.js"></script>
+	<script src="js/controller/userCtrl.js"></script>
+	<script src="js/controller/userService.js"></script>
+
+</head>
+<body ng-controller= "baseController">
+	<!-- ChucNH added start -->
+	<div ng-include src="'views/home/top_nav.html'" ></div>
+	<div id="wrap">
+		<div ui-view class="ui-view-container"></div>
+	</div>
+	<div ng-include src="'views/home/footer.html'"></div>
+	<!-- ChucNH added end-->
+</body>
+</html>
