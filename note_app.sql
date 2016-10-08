@@ -1,0 +1,1 @@
+CREATE TABLE users(id SERIAL PRIMARY KEY, uname VARCHAR(40) not null, password VARCHAR(40) not null, status BOOLEAN)

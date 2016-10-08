@@ -6,13 +6,18 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="/">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li> 
-      <li><a href="#">Page 3</a></li> 
+      <li><a href="add-notes">Add new Notes</a></li>
+      <li><a href="list-notes">List Notes</a></li>
+      <li><a href="edit-note">Edit</a></li> 
+      <li><a href="delete-note">Delete</a></li> 
+
+      <li><a ui-sref="list-user">List User</a></li> 
+
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li ng-if="!currentUser"><a ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li ng-if="!currentUser"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li ng-if="currentUser"><a href="javascript:void(0)" ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
 </nav>

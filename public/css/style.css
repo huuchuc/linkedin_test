@@ -58,3 +58,47 @@ footer{
 .check-remember{
 	padding-left: 20px;
 }
+.checkbox label{
+	padding-left: 0 !important;
+}
+.btn-forgot{
+	font-weight: 500;
+}
+
+/*404 PAGE*/
+.page-404-wrapper {
+ text-align:center;
+ padding-top:50px;
+ min-height: 400px;
+}
+.page-404-wrapper .number-404 {
+ color: #191f2d;
+ font-size: 32px;
+ font-weight: 600;
+}
+.page-404-wrapper .number-404 span {
+ display:inline-block;
+ margin:0 5px;
+ position:relative;
+}
+.page-404-wrapper .number-404 span i {
+  color: red;
+  font-size: 60px;
+  position: relative;
+  top: 8px;
+  margin: 0 3px;
+}
+.page-404-wrapper .title-404 {
+ color:#2c3e50;
+ font-size:24px;
+ margin:0;
+}
+.page-404-wrapper .text-404 {
+ color:#8c97b2;
+ font-size:16px;
+ margin:0;
+}
+.page-404-wrapper .link-back {
+ color:#3498db;
+ font-size:16px;
+}

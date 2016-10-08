@@ -1,0 +1,35 @@
+<div class="container">
+	<h1>List User</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>User name</th>         
+				<th>Date created</th>
+				<th>Date updated</th>
+				<th>Action</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input class="form-control" ng-model="currentUser.uname"></td>
+				<td><input class="form-control" ng-model="currentUser.created_at"></td>
+				<td><input class="form-control" ng-model="currentUser.updated_at"></td>
+				<td><button class="btn btn-primary" ng-click="addUser()">Add</button></td>
+				<td>
+					<button class="btn btn-info" ng-click="updateUser()">Update</button>&nbsp;&nbsp;
+					<button class="btn btn-info" ng-click="deselect()">Clear</button>
+				</td>
+			</tr>
+			<tr ng-repeat="contact in contactlist">
+				<td>{{currentUser.uname}}</td>
+				<td>{{currentUser.created_at}}</td>
+				<td>{{currentUser.updated_at}}</td>
+				<td><button class="btn btn-danger" ng-click="remove(currentUser.id)">Remove</button></td>
+				<td><button class="btn btn-warning" ng-click="edit(currentUser.id)">Edit</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>

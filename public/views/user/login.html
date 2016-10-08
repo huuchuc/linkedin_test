@@ -13,20 +13,6 @@
 				  <input type="password" name="password" class="form-control" required ng-model="userData.password" placeholder="Enter password">
 				</div>
 				<div class="row">
-					<div class="col-xs-12 col-md-6">
-						<div class="checkbox check-remember">
-		                    <input id="checkbox" type="checkbox">
-		                    <label for="checkbox" style="font-weight: 700;">
-		                       Remember me
-		                    </label>
-		                </div>
-					</div>
-					<div class="col-xs-12 col-md-6">
-		                    <a ui-sref="forgotpwd" class="btn btn-forgot pull-right">Forgot Password?</a>
-		            </div>
-				</div>
-				
-				<div class="row">
 	                <div class="col-xs-12 col-md-12">
 	                    <button class="btn btn-success btn-block" type="submit" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i>LOGIN</button>
 	                </div>

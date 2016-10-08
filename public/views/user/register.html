@@ -1,48 +1,53 @@
 <div class="row">
-  		<div class="col-xs-12 col-md-4"></div>
-  		<div class="col-xs-12 col-md-4" style="margin: 20px 0">
-  			<h2 class="form-login-heading">Join Us</h2>
-			<form class="form-login-content" name="form" ng-submit="register()">
-				<div class="form-group">
-                    <label for="uname">User name</label>
-                    <input type="text" class="form-control" required name="uname" ng-model="userData.uname" autocomplete="off" placeholder="Enter user name">
-                    <div ng-messages="form.uname.$error" ng-if="form.uname.$dirty">
-                        <div ng-message="required">User name must not null</div>
-                    </div>
-				</div>
-				<div class="form-group">
-				  <label for="password">Password</label>
-				  <input type="password" name="password" class="form-control" required ng-model="userData.password" md-maxlength="25" minlength="8" placeholder="Enter password">
-				  <div ng-messages="form.password.$error" ng-if="form.password.$dirty">
-                        <div ng-message="required">Password must not null</div>
-                        <div ng-message="minlength">Password must greater than 8 characters</div>
-                        <div ng-message="md-maxlength">Password must less than 25 characters</div>
-                    </div>
-				</div>
-				<div class="form-group">
-				  	<label for="re_password">Confirm Password</label>
-				  	<input type="password" name="re_password" class="form-control" ng-required="true" ng-model="userData.re_password" password-match="userData.password" placeholder="Enter password again">
-				  	<div ng-messages="form.re_password.$error" ng-if="form.re_password.$dirty">
-                    	<div ng-message="unique">Password does not match</div>
-                	</div>
-				</div>
-                <div class="checkbox check-remember">
-                    <input id="checkbox" type="checkbox" required ng-model="cterm">
-                    <label for="checkbox" style="font-weight: 700;">
-                        Accept and agree to our <a target="_blank"  ui-sref="tos" class="btn-forgot">Terms of Service</a>
-                    </label>
-                </div>
+  <div class="col-xs-12 col-md-4"></div>
+  <div class="col-xs-12 col-md-4" style="margin: 20px 0">
+    <div ng-if="success">
+      <div class="alert alert-success">
+        <p ng-bind="success"></p>
+      </div>
+    </div>
+    <div ng-if="error">
+      <div class="alert alert-danger">
+        <p ng-bind="error"></p>
+      </div>
+    </div>
 
-                <div class="row">
-	                <div class="col-xs-12 col-md-12">
-						<button type="submit" class="btn btn-success btn-block" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> SIGN UP</button>
-					</div>
-				</div>
-			</form>
+    <h2 class="form-login-heading">Join Us</h2>
+    <form class="form-login-content" name="form" ng-submit="register()">
+      <div class="form-group">
+        <label for="uname">User name</label>
+        <input type="text" class="form-control" required name="uname" ng-model="userData.uname" autocomplete="off" placeholder="Enter user name">
+        <div ng-messages="form.uname.$error" ng-if="form.uname.$dirty">
+          <div ng-message="required">User name must not null</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" required ng-model="userData.password" md-maxlength="25" minlength="4" placeholder="Enter password">
+        <div ng-messages="form.password.$error" ng-if="form.password.$dirty">
+          <div ng-message="required">Password must not null</div>
+          <div ng-message="minlength">Password must greater than 4 characters</div>
+          <div ng-message="md-maxlength">Password must less than 25 characters</div>
+        </div>
+      </div>
+      <div class="form-group">
+       <label for="re_password">Confirm Password</label>
+       <input type="password" name="re_password" class="form-control" ng-required="true" ng-model="userData.re_password" password-match="userData.password" placeholder="Enter password again">
+       <div ng-messages="form.re_password.$error" ng-if="form.re_password.$dirty">
+         <div ng-message="unique">Password does not match</div>
+       </div>
+     </div>
 
-            <div class="form-login-bottom text-center">
-				Already registered? <a ui-sref="login" class="btn-forgot"><b>Login</b></a>
-			</div>
-  		</div>
-  		<div class="col-xs-12 col-md-4"></div>
-  	</div>
+    <div class="row">
+     <div class="col-xs-12 col-md-12">
+      <button type="submit" class="btn btn-success btn-block" ng-disabled="!form.$dirty || (form.$dirty && form.$invalid)"><i class="fa fa-spinner fa-spin" ng-show="Proccess" ></i> SIGN UP</button>
+    </div>
+  </div>
+</form>
+
+<div class="form-login-bottom text-center">
+  Already registered? <a ui-sref="login" class="btn-forgot"><b>Login</b></a>
+</div>
+</div>
+<div class="col-xs-12 col-md-4"></div>
+</div>
