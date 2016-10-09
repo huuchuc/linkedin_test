@@ -6,6 +6,8 @@ baseCtrl.controller('baseController',['$scope', '$rootScope', '$window','$cookie
 	// Get login infor from node server
     $http.get('/loggedin').success(function(data) {
     	if (data !== '0') {
+    		console.log('baseCtrl: ');
+    		console.log(data);
 	        $cookieStore.put('currentUser', data);
 	        $rootScope.currentUser = $cookieStore.get('currentUser');
 	        GetLoggedIn.isLogged = true;
@@ -14,6 +16,8 @@ baseCtrl.controller('baseController',['$scope', '$rootScope', '$window','$cookie
 	        $rootScope.currentUser = null;
             GetLoggedIn.isLogged = false;
 	    }
+    }).error(function(err){
+	    console.log(err);
     });
 
 	// logout

@@ -6,22 +6,24 @@ module.exports = function(passport) {
 
     // Create session passport
     passport.serializeUser(function(user, done) {
+      console.log('/serializeUser: '+ user);
       done(null, user.id);
     });
 
     // Put user detail to session
     passport.deserializeUser(function(id, done) {
       models.user.find({
-        attributes: ['uname'],
+        attributes: ['id','uname'],
         where: {
           id: id
         }
       })
       .then(function(user) {
-        console.log('/login: '+ user);
+        console.log('/deserializeUser: '+ user);
         done(null, user);
       })
       .catch(function(err){
+        console.log('/deserializeUser: '+ err);
         done(err, null);
       });
     });
@@ -68,7 +70,7 @@ module.exports = function(passport) {
         passReqToCallback: true // allow route call and check login
       },function(req, username, password, done) {
 
-        process.nextTick(function() {
+        // process.nextTick(function() {
 
           console.log(username+","+password);
           console.log(models.user);
@@ -80,26 +82,31 @@ module.exports = function(passport) {
               }
             })
             .then(function(user) {
-              console.log("/signup: "+user);
-              return done(null, false, { message: 'username existed' });
+              if(user){
+                  console.log("/signup: user not null");
+              
+                  return done(null, false);
+              }else{
+                  console.log("/signup: user null");
+                  var hashPwd = tool.generateHash(password);
+                  models.user.create({
+                    uname : username,
+                    password: hashPwd
+                  })
+                  .then(function(result) {
+                    console.log("/signup: "+ result);
+                    return done(null, result);
+                  })
+                  .catch(function(err){
+                    console.log("/signup: "+ err);
+                    return done(err);
+                  });
+              }
             })
             .catch(function(err){
               return done(err);
             });
-
-            var hashPwd = tool.generateHash(password);
-            models.user.create({
-              uname : username,
-              password: hashPwd
-            })
-            .then(function(user) {
-              return done(null, result, { message: 'Created successful' })
-            })
-            .catch(function(err){
-              return done(err);
-            });
-
-          });
+          // });
       }));
 
   }

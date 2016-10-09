@@ -11,11 +11,11 @@ usrServ.factory('User', ['$http', '$stateParams', function($http, $stateParams) 
         logout: function() {
             return $http.get('/logout');
         },
-        get: function() {
+        list: function() {
             return $http.get('/api/user/list');
         },
-        getUserDetail: function() {
-            return $http.get('api/user/detail/' + $stateParams.id);
+        detail: function(id) {
+            return $http.get('api/user/detail/' + id);
         },
         delete: function(id) {
             return $http.delete('/api/user/delete/' + id);

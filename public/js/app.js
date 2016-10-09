@@ -8,10 +8,12 @@ var app = angular.module('notes', [
  'appRoutes',
  'baseCtrl',
  'userCtrl',
- 'userService'
+ 'userService',
+ 'noteCtrl',
+ 'noteService'
 ]);
 
-interceptor
+// interceptor
 app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 }]);
@@ -27,7 +29,8 @@ app.run(['$log', '$rootScope', '$timeout', '$window', '$state', '$location', 'Ge
             $rootScope.oldParam = fromParams;
 
             // check login in every router
-            if (toState.access.requiredLogin && !GetLoggedIn.isLogged) {
+            // if (toState.access.requiredLogin && !GetLoggedIn.isLogged) {
+            if (toState.access.requiredLogin && !$rootScope.currentUser) {
                 $state.transitionTo('login');
                 event.preventDefault();
             }

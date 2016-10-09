@@ -41,7 +41,7 @@ appRouter.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 		{
 			url: "/list-note",
 			templateUrl: "./views/note/list_note.html",
-			controller: 'noteController',
+			controller: 'listNoteController',
 			access: {
 				requiredLogin: true
 			}
@@ -49,17 +49,17 @@ appRouter.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 		.state('create-note',
 		{
 			url: "/create-note",
-			templateUrl: "./views/note/create.html",
-			controller: 'noteController',
+			templateUrl: "./views/note/create_note.html",
+			controller: 'createNoteController',
 			access: {
 				requiredLogin: true
 			}
 		})
-		.state('detail',
+		.state('detail-note',
 		{
-			url: "/detail-user",
-			templateUrl: "./views/user/detail.html",
-			controller: 'noteController',
+			url: "/detail-note",
+			templateUrl: "./views/note/detail_note.html",
+			controller: 'detailNoteController',
 			params: {id: null},
 			access: {
 				requiredLogin: true
@@ -91,7 +91,7 @@ appRouter.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 		{
 			url: "/list-user",
 			templateUrl: "./views/user/list_user.html",
-			controller: 'userController',
+			controller: 'listUserController',
 			access: {
 				requiredLogin: true
 			}	

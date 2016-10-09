@@ -1,12 +1,16 @@
-var models  = require('../models');
-
 var models = require('../models/index');
 
 module.exports 	= function(app){
 
-	// list notes
-	app.get('/api/note/list', function(req, res){
-		models.note.findAll({}).then(function(notes) {
+	// list notes by user
+	app.get('/api/note/list/:user_id', function(req, res){
+		models.note.findAll({
+			where: {
+				user_id: req.params.user_id
+				}
+			}).then(function(notes) {
+			console.log('/note/list: ');
+			console.log(notes);
 		    res.json(notes);
 		});
 	});
@@ -26,29 +30,38 @@ module.exports 	= function(app){
 	app.post('/api/note/add', function(req, res) {
 	  models.note.create({
 	    title: req.body.title,
-	    content: req.body.user_id,
-	    version: 1
+	    content: req.body.content,
+	    version: 1,
+	    user_id: req.body.user_id
 	  }).then(function(note) {
 	    res.json(note);
 	  });
 	});
 
 	// update single note
-	app.put('/api/note/update/:id', function(req, res) {
+	app.put('/api/note/update', function(req, res) {
+	  // Check note is belong to current user
 	  models.note.find({
 	    where: {
-	      id: req.params.id
+	      id 	 : req.body.id,
+	      user_id: req.body.user_id
 	    }
 	  }).then(function(note) {
 	    if(note){
-	      note.updateAttributes({
-	        title: req.body.title,
-	        content: req.body.content,
-	        version: (note.version + 1)
-	      }).then(function(note) {
-	        res.send(note);
-	      });
+		    var version = note.version;
+		    version++;
+
+		    console.log(version);
+
+		    note.updateAttributes({
+		        content: req.body.content,
+		        version: version
+		      }).then(function(note) {
+		        res.json(note);
+		      });
 	    }
+	  }).error(function(err){
+	  	res.send(err);
 	  });
 	});
 

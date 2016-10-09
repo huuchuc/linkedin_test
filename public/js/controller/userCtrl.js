@@ -52,6 +52,51 @@ userCtrl.controller('userController', ['$scope', '$rootScope', '$window','$cooki
         }
     };
 
-
+    // LIST ALL USERS
+    $scope.listAllUser = function(){
+    	User.list().success(function(users){
+	        $scope.users = users;
+	        $scope.success = "Loaded successful";
+	    }).error(function(err){
+	        $scope.error = err;
+	    });
+    }
+    
 	
 }]);
+
+userCtrl.controller('listUserController', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User){
+	// LIST ALL USERS
+	var listAll = function(){
+	    User.list().success(function(users){
+	        $scope.users = users;
+	        $scope.success = "Loaded successful";
+	    }).error(function(err){
+	        $scope.error = err;
+	    });
+    };
+
+    listAll();
+
+    // DELETE USER
+    $scope.deleteUser = function(id){
+        console.log('/deleteUser()');
+        if(id !== $rootScope.currentUser.id){
+            User.delete(id).success(function(){
+                $scope.success = "User was deleted successful";
+                listAll();
+            }).error(function(err){
+                $scope.error = "You cannot delete this user!";
+            });
+        }else{
+            $scope.error = "You cannot delete your self!";
+        }
+    };
+
+}]);
+
+
+
+
+
+

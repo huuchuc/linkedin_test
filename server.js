@@ -48,6 +48,10 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Authenticate middleware
+var isLoggedIn = require('./app/middleware');
+isLoggedIn(app, passport);
+
 // Routes ===================
 
 routes(app, passport);
