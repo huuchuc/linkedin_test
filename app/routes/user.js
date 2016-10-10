@@ -2,7 +2,7 @@ var models  = require('../models/index');
 
 module.exports 	= function(app){
 
-	// Create user
+	// CREATE USER
 	app.post('/api/user/create', function (req, res, next) {  
 	  models.user.create({
 	    uname	: req.body.uname,
@@ -12,14 +12,14 @@ module.exports 	= function(app){
 	  });
 	});
 
-	// list all users
+	// LIST ALL USER
 	app.get('/api/user/list', function(req, res){
 		models.user.findAll({}).then(function(users) {
 		    res.json(users);
 		});
 	});
 
-	// detail single user
+	// DETAIL USER
 	app.get('/api/user/detail/:uid', function(req, res){
 		models.user.find({
 			where: {
@@ -30,7 +30,7 @@ module.exports 	= function(app){
 		});
 	});
 
-	// Delete user
+	// DELETE USER
 	app.delete('/api/user/delete/:uid', function(req, res) {
 		models.user.destroy({
 			where: {

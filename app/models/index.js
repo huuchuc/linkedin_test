@@ -4,7 +4,7 @@ var fs        = require("fs");
 var path      = require("path");
 var Sequelize = require("sequelize");
 var env       = process.env.NODE_ENV || "development";
-var config    = require('../../config/sequelize')[env];
+var config    = require('../../config/database')[env];
 var db        = {};
 
 //Create a Sequelize connection to the database using the URL in config/config.js

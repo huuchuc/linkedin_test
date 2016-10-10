@@ -3,22 +3,14 @@
 var express 	  = require('express');
 var app 		  = express();
 var server    	  = require('http').createServer(app);
-
-// var pg 		  	  = require('pg');
-// var database      = require('./config/database');
-// const connString  = process.env.DATABASE_URL || database.connString;
-
-
 var path          = require('path');
 var logger        = require('morgan');
 var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
-
+var flash		  = require('connect-flash');
 var passport      = require('passport');
-
 var session       = require('express-session');
 var routes        = require('./app/routes');
-
 var models		  = require('./app/models');
 
 // CONFIG APP ============================
@@ -39,8 +31,10 @@ app.use(cookieParser());
 
 // required for passport
 app.use(session({
-    secret: 'note'
-    // cookie:{maxAge : 60000 * 30} // 30 mins
+    secret: 'note',
+    saveUninitialized: true,
+  	resave: true,
+    cookie:{maxAge : 60000 * 30} // 30 mins
 }));
 
 // Init passport
@@ -48,9 +42,12 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// show flash message that stored in session
+app.use(flash());
+
 //Authenticate middleware
-var isLoggedIn = require('./app/middleware');
-isLoggedIn(app, passport);
+var middleware = require('./app/middleware');
+middleware(app);
 
 // Routes ===================
 

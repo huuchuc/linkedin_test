@@ -1,22 +1,22 @@
 // LOGIN FUNCTION
 module.exports = function(app, passport) {
     
-    //check is logged in?
+    //CHECK IS LOGGED IN?
     app.get('/loggedin', function(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
     });
 
-    // Login page
+    // LOGIN 
     app.post('/login', passport.authenticate('login'), function(req, res) {
         res.send(req.user);
     });
 
-    // Register page
+    // REGISTER
     app.post('/signup', passport.authenticate('signup'), function(req, res) {
         return res.send(req.user);
     });
 
-    // Logout
+    // LOGOUT
     app.get('/logout', function(req, res) {
         req.logout();
         req.session.destroy();

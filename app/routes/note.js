@@ -2,21 +2,19 @@ var models = require('../models/index');
 
 module.exports 	= function(app){
 
-	// list notes by user
+	// LIST ALL NOTES BY USER
 	app.get('/api/note/list/:user_id', function(req, res){
 		models.note.findAll({
 			where: {
 				user_id: req.params.user_id
 				}
 			}).then(function(notes) {
-			console.log('/note/list: ');
-			console.log(notes);
 		    res.json(notes);
 		});
 	});
 
-	// get single note
-	app.get('/api/note/detail/:id', function(req, res) {
+	// GET SINGLE NOTE
+	app.get('/api/note/detail/:id',  function(req, res) {
 	  models.note.find({
 	    where: {
 	      id: req.params.id
@@ -26,7 +24,7 @@ module.exports 	= function(app){
 	  });
 	});
 
-	// add new note
+	// ADD NEW NOTE
 	app.post('/api/note/add', function(req, res) {
 	  models.note.create({
 	    title: req.body.title,
@@ -38,7 +36,7 @@ module.exports 	= function(app){
 	  });
 	});
 
-	// update single note
+	// UPDATE SINGLE NOTE
 	app.put('/api/note/update', function(req, res) {
 	  // Check note is belong to current user
 	  models.note.find({
@@ -50,9 +48,6 @@ module.exports 	= function(app){
 	    if(note){
 		    var version = note.version;
 		    version++;
-
-		    console.log(version);
-
 		    note.updateAttributes({
 		        content: req.body.content,
 		        version: version
@@ -65,7 +60,7 @@ module.exports 	= function(app){
 	  });
 	});
 
-	// delete a single note
+	// DELETE USER
 	app.delete('/api/note/delete/:id', function(req, res) {
 	  models.note.destroy({
 	    where: {

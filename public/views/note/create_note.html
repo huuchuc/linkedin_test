@@ -6,7 +6,7 @@
 			<form name="form" ng-submit="addNote()">
 				  <div class="form-group">
 				    <label for="title">Title</label>
-				    <input type="text" class="form-control" id="title" required ng-model="note.title">
+				    <input ng-model="note.title" type="text" class="form-control" id="title" required minlength="1" maxlength="255">
 				  </div>
 				  <div class="form-group">
 					    <label for="content">Content</label>

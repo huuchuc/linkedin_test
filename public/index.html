@@ -5,10 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	
 	<!-- CUSTOMIZE STYLE -->
-	<link rel="stylesheet" type='text/css' href="./css/style.css"/>
+	<!-- <link rel="stylesheet" type='text/css' href="./dev/css/style.css"/> -->
 
 	<!-- LIBRARY -->
-	<link rel="stylesheet" type='text/css' href="./libs/bootstrap/dist/css/bootstrap.min.css"/>
+	<!-- <link rel="stylesheet" type='text/css' href="./libs/bootstrap/dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type='text/css' href="./libs/font-awesome/css/font-awesome.min.css"/>
 
 	<script src="./libs/angular/angular.js"></script>
@@ -17,29 +17,42 @@
 	<script src="./libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 	<script src="./libs/angular-cookies/angular-cookies.min.js"></script>
 	<script src="./libs/angular-messages/angular-messages.min.js"></script>
-
 	<script src="./libs/jquery/dist/jquery.min.js"></script>
-	<script src="./libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./libs/bootstrap/dist/js/bootstrap.min.js"></script> -->
+
+	<!-- PRODUCTION -->
+	<link rel="stylesheet" type='text/css' href="./dist/css/style.min.css"/>
+	<link rel="stylesheet" type='text/css' href="./dist/css/library.min.css"/>
+	<script src="./dist/js/min/dependencies.min.js"></script>
+	<script src="./dist/js/min/library.min.js"></script>
 
 </head>
 <body >
 	<div ng-controller= "baseController">
 		<div ng-include src="'views/home/top_nav.html'" ></div>
 		<div id="wrap">
+			<div ng-include src="'views/home/message.html'"></div>
 			<div ui-view class="ui-view-container"></div>
 		</div>	
 		<div ng-include src="'views/home/footer.html'"></div>
 	</div>
 
-	<!-- APP CODE -->	
-	<script src="js/app.js"></script>
-	<script src="js/appRouter.js"></script>
-	<script src="js/directives.js"></script>
-	<script src="js/controller/baseCtrl.js"></script>
-	<script src="js/controller/userCtrl.js"></script>
-	<script src="js/service/userService.js"></script>
-	<script src="js/controller/noteCtrl.js"></script>
-	<script src="js/service/noteService.js"></script>
+	<!-- DEV APP CODE -->	
+	<!-- <script src="dev/js/app.js"></script>
+	<script src="dev/js/appRouter.js"></script>
+	<script src="dev/js/directives.js"></script>
+	<script src="dev/js/service/msgService.js"></script>
+	<script src="dev/js/controller/baseCtrl.js"></script>
+	<script src="dev/js/controller/userCtrl.js"></script>
+	<script src="dev/js/service/userService.js"></script>
+	<script src="dev/js/controller/noteCtrl.js"></script>
+	<script src="dev/js/service/noteService.js"></script> -->
+	
+	<!-- TEST -->
+	<script src="./dist/js/notes.js"></script>
+
+	<!-- PRODUCTION -->
+	<!-- <script src="./dist/js/min/notes.min.js"></script> -->
 
 </body>
 </html>

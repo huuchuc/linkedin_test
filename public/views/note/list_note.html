@@ -16,7 +16,9 @@
   
   <div class="row">
     <div ng-if="!notes || notes.length === 0">
-        <div class="well well-sm text-center">You don't have any Note!</div>
+        <div class="alert alert-warning text-center">
+          You don't have any Note!
+        </div>
     </div>
 
     <table class="table" ng-if="notes.length > 0">

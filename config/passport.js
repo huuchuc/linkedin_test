@@ -1,29 +1,23 @@
 var LocalStrategy = require('passport-local').Strategy;
-var tool          = require('./tool');
 var models        = require('../app/models/index');
 
 module.exports = function(passport) {
 
-    // Create session passport
+    // PUT USER ID TO SESSION
     passport.serializeUser(function(user, done) {
-      console.log('/serializeUser: '+ user);
       done(null, user.id);
     });
 
-    // Put user detail to session
+    // GET DETAIL USER & PUT TO SESSION
     passport.deserializeUser(function(id, done) {
       models.user.find({
         attributes: ['id','uname'],
         where: {
           id: id
         }
-      })
-      .then(function(user) {
-        console.log('/deserializeUser: '+ user);
+      }).then(function(user) {
         done(null, user);
-      })
-      .catch(function(err){
-        console.log('/deserializeUser: '+ err);
+      }).catch(function(err){
         done(err, null);
       });
     });
@@ -37,24 +31,18 @@ module.exports = function(passport) {
         }, function(req, username, password, done) {
           // Asynchonus 
           process.nextTick(function() {
-
-            var hashPwd = tool.generateHash(password);
-
-            console.log(username+","+password);
-
             //find user by uname
             models.user.find({
               where: {
                 uname   : username
               }
             }).then(function(user) {
-                console.log("/login: "+user);
+                console.log(models.user.validPassword(password, user.password));
 
-                if(user && tool.validPassword(password, user.password)){
+                if(user && models.user.validPassword(password, user.password)){
                   return done(null, user);
                 }
                 return done(null, false);
-              
             }).catch(function(err){
                 console.log(err);
                 return done(err);
@@ -70,43 +58,30 @@ module.exports = function(passport) {
         passReqToCallback: true // allow route call and check login
       },function(req, username, password, done) {
 
-        // process.nextTick(function() {
-
-          console.log(username+","+password);
-          console.log(models.user);
-
+        process.nextTick(function() {
             //find user by uname
             models.user.find({
               where: {
                 uname: username
               }
-            })
-            .then(function(user) {
+            }).then(function(user) {
               if(user){
-                  console.log("/signup: user not null");
-              
                   return done(null, false);
               }else{
-                  console.log("/signup: user null");
-                  var hashPwd = tool.generateHash(password);
+                  var hashPwd = models.user.generateHash(password);
                   models.user.create({
                     uname : username,
                     password: hashPwd
-                  })
-                  .then(function(result) {
-                    console.log("/signup: "+ result);
+                  }).then(function(result) {
                     return done(null, result);
-                  })
-                  .catch(function(err){
-                    console.log("/signup: "+ err);
+                  }).catch(function(err){
                     return done(err);
                   });
               }
-            })
-            .catch(function(err){
+            }).catch(function(err){
               return done(err);
             });
-          // });
+          });
       }));
 
   }

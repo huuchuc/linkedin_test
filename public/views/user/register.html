@@ -5,9 +5,10 @@
     <form class="form-login-content" name="form" ng-submit="register()">
       <div class="form-group">
         <label for="uname">User name</label>
-        <input type="text" class="form-control" required name="uname" ng-model="userData.uname" autocomplete="off" placeholder="Enter user name">
+        <input type="text" class="form-control" required name="uname" ng-model="userData.uname" autocomplete="off" placeholder="Enter user name" md-maxlength="40">
         <div ng-messages="form.uname.$error" ng-if="form.uname.$dirty">
           <div ng-message="required">User name must not null</div>
+          <div ng-message="md-maxlength">User name must less than 40 characters</div>
         </div>
       </div>
       <div class="form-group">
