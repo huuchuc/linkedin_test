@@ -1,0 +1,30 @@
+This is a simple web application.
+
+Library and framework:
+
+1. Server: Node.js + Express + Passportjs
+2. Client: AngularJS + Bootstrap
+3. Database: PostgreSQL
+
+4. ORM: Sequelize (for PostgreSQL)
+5. Task Runner: grunt 
+6. Test Frontend: Karma + Jasmine
+7. Test and debug Backend: Morgan + node-inspector
+
+How to run:
+1. install PostgreSQL : http://postgresapp.com
+
+2. create your database with name: note_app
+This name was config in : config/database.js
+
+2. make sure you are in application folder.
+ Download all library: npm install
+
+3. install grunt task runner cli : npm install -g grunt-cli
+
+4. install test karma cli: npm install -g karma-cli
+
+5. now you can start server: grunt server
+go to : http://localhost:3000
+
+6. if you want to run test karma: grunt test

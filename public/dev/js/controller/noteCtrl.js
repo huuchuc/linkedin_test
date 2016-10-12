@@ -46,7 +46,7 @@ angular.module('noteCtrl', [])
         }).error(function(err){
             Message.createAlertError(err);
         });
-    }
+    };
 }])
 .controller('detailNoteController',['$scope', '$rootScope', '$stateParams', 'Note', 'Message' , 
     function($scope, $rootScope, $stateParams, Note, Message){

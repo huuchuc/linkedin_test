@@ -49,7 +49,6 @@ middleware(app);
 
 routes(app, passport);
 
-
 // LAUNCH ===================
 // Sequelize sync models to db
 models.sequelize.sync().then(function () {

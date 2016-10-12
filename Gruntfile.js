@@ -1,14 +1,14 @@
 module.exports = function(grunt) {
-	//Load task library
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-karma');
+	
 
     // Config task
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
+        // check all js files for errors
+        jshint: {
+          all: ['public/dev/js/**/*.js'] 
+        },
 
         // concat js file
         concat: {
@@ -82,14 +82,43 @@ module.exports = function(grunt) {
             // for scripts, run uglify
             scripts: {
                 files: './public/dev/js/**/*.js',
-                tasks: ['concat', 'uglify']
-            }
+                tasks: ['jshint', 'concat', 'uglify']
+            } 
         },
+
+        // watch our node server for changes
+        nodemon: {
+          production: {
+            script: 'server.js'
+          }
+        },
+
+        // run watch and nodemon at the same time
+        concurrent: {
+          options: {
+            logConcurrentOutput: true
+          },
+          tasks: ['nodemon:production', 'watch']
+        } 
 
     });
 
+    //Load task library
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-concurrent');
+
     // Create task
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'watch']);
+    grunt.registerTask('default', ['jshint', 'concat', 'uglify','cssmin', 'concurrent']);
+    grunt.registerTask('build', ['jshint', 'concat', 'uglify', 'cssmin', 'watch']);
     grunt.registerTask('test', ['karma']);
+    grunt.registerTask('server', ['nodemon:production']); 
+    
+
     
 };
