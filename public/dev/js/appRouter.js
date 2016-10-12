@@ -2,8 +2,9 @@ angular.module('appRoutes', [])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 	function($stateProvider, $urlRouterProvider, $locationProvider){
 		// 404 page
-		$urlRouterProvider.otherwise("/404");
-		$urlRouterProvider.when('/_=_', '/');
+		$urlRouterProvider.otherwise('/404');
+		// $urlRouterProvider.when('/_=_', '/');
+		$urlRouterProvider.when('/api_', '/');
 
 		$stateProvider
 		// HOMEPAGE
@@ -18,7 +19,7 @@ angular.module('appRoutes', [])
 		})
 		.state('404',
 		{
-			url: "/404",
+			url: '/404',
 			templateUrl : './views/home/404.html',
 			title: '404 - Page not found',
 			access: {
@@ -38,7 +39,7 @@ angular.module('appRoutes', [])
 		// NOTE router
 		.state('list-note',
 		{
-			url: "/list-note",
+			url: '/list-note',
 			templateUrl: "./views/note/list_note.html",
 			controller: 'listNoteController',
 			access: {
@@ -65,7 +66,6 @@ angular.module('appRoutes', [])
 			}
 		})
 		
-
 		// USER
 		.state('login', 
 		{

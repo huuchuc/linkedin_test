@@ -16,19 +16,20 @@ module.exports = function(config) {
     files: [
         // bower
         './public/libs/angular/angular.js', 
+        './public/libs/angular-mocks/angular-mocks.js', 
         './public/libs/angular-ui-router/release/angular-ui-router.min.js',
         './public/libs/angular-sanitize/angular-sanitize.min.js',
         './public/libs/angular-bootstrap/ui-bootstrap-tpls.min.js',
         './public/libs/angular-cookies/angular-cookies.min.js',
         './public/libs/angular-messages/angular-messages.min.js',
+        './libs/angular-flash-alert/dist/angular-flash.min.js',
         './public/libs/jquery/dist/jquery.min.js',
         './public/libs/bootstrap/dist/js/bootstrap.min.js',
         // endbower
         
-        './public/libs/angular-mocks/angular-mocks.js', 
 
-        './public/js/*.js',
-        './public/js/**/*.js',
+        './public/dev/js/*.js',
+        './public/dev/js/**/*.js',
         './test_karma/**/*.js'
     ],
 

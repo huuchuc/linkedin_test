@@ -15,12 +15,16 @@ angular.module('userCtrl', [])
                     $rootScope.currentUser = $cookieStore.get('currentUser');
                     $window.sessionStorage.token = data.token;
                     GetLoggedIn.isLogged = true;
+                    
+                    // Message
                     Message.createAlertSuccess('Login successful');
-                    $state.go('home');
+                    
+                    // get back to old page or go home
+                    nextState();
                 })
                 .error(function(err) {
                     Message.createAlertError('Login fail!');
-                	GetLoggedIn.isLogged = true;
+                	GetLoggedIn.isLogged = false;
                     $state.go('login');
                 });
         }else{
@@ -43,30 +47,25 @@ angular.module('userCtrl', [])
                 });
         }
     };
+
+    var nextState = function(){
+        // if ($rootScope.oldState !== '' 
+        //     && $rootScope.oldState !== 'login' 
+        //     && $rootScope.oldState !== 'register') {
+        //     if ($rootScope.oldParam.id !== null) {
+        //         $state.go($rootScope.oldState, {
+        //             id: $rootScope.oldParam.id
+        //         });
+        //     } else {
+        //         $state.go($rootScope.oldState);
+        //     }
+        // } else {
+        //     $state.go('home');
+        // }
+
+        $state.go('home');
+    };
 	
-}])
-.controller('listUserController', ['$scope', '$rootScope', 'User', 'Message', function($scope, $rootScope, User, Message){
-	// LIST ALL USERS
-	var listAll = function(){
-	    User.list().success(function(users){
-	        $scope.users = users;
-	    });
-    };
-
-    listAll();
-
-    // DELETE USER
-    $scope.deleteUser = function(id){
-        if(id !== $rootScope.currentUser.id){
-            User.delete(id).success(function(){
-                Message.createAlertSuccess('Delete fail!');
-                listAll();
-            });
-        }else{
-            Message.createAlertError('Delete fail!');
-        }
-    };
-
 }]);
 
 

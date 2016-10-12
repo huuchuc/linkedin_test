@@ -7,7 +7,6 @@ var path          = require('path');
 var logger        = require('morgan');
 var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
-var flash		  = require('connect-flash');
 var passport      = require('passport');
 var session       = require('express-session');
 var routes        = require('./app/routes');
@@ -41,9 +40,6 @@ app.use(session({
 require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-
-// show flash message that stored in session
-app.use(flash());
 
 //Authenticate middleware
 var middleware = require('./app/middleware');

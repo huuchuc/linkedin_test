@@ -37,11 +37,11 @@ module.exports = function(passport) {
                 uname   : username
               }
             }).then(function(user) {
-                console.log(models.user.validPassword(password, user.password));
-
-                if(user && models.user.validPassword(password, user.password)){
-                  return done(null, user);
-                }
+                if(user){
+                  if(models.user.validPassword(password, user.password)){
+                    return done(null, user);
+                  }
+                } 
                 return done(null, false);
             }).catch(function(err){
                 console.log(err);

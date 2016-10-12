@@ -1,5 +1,5 @@
 angular.module('userService', [])
-.factory('User', ['$http', '$stateParams', function($http, $stateParams) {
+.factory('User', ['$http', function($http) {
     return {
         login: function(userData) {
             return $http.post('/login', userData);

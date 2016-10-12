@@ -3,7 +3,7 @@ module.exports = function(app, passport) {
     
     //CHECK IS LOGGED IN?
     app.get('/loggedin', function(req, res) {
-        res.send(req.isAuthenticated() ? req.user : '0');
+        res.send(req.isAuthenticated() ? req.user : {id:'0'});
     });
 
     // LOGIN 
@@ -20,6 +20,6 @@ module.exports = function(app, passport) {
     app.get('/logout', function(req, res) {
         req.logout();
         req.session.destroy();
-        res.send(200);
+        res.send({id: '200'});
     });
 }

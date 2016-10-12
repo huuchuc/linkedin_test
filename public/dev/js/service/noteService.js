@@ -1,5 +1,5 @@
 angular.module('noteService', [])
-.factory('Note', ['$http', '$stateParams', function($http, $stateParams) {
+.factory('Note', ['$http', function($http) {
     return {
         list: function(user_id) {
             return $http.get('/api/note/list/'+user_id);

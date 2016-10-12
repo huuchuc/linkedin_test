@@ -1,43 +1,37 @@
 angular.module('noteCtrl', [])
-.controller('listNoteController', ['$scope', '$rootScope', '$window','$cookieStore', '$state', 'Note', 'Message',
-	function($scope, $rootScope, $window, $cookieStore, $state, Note, Message){
+.controller('listNoteController', ['$scope', '$rootScope', '$state', 'Note', 'Message',
+	function($scope, $rootScope, $state, Note, Message){
 
     $scope.notes = {};
 
-    var resetMsg = function(){
-        // reset message
-        $scope.error = '';
-        $scope.success = '';
-    }   
-
     // LIST ALL NOTES
-    var listAllNote = function(){
-        if($rootScope.currentUser.id){
+    $scope.listAllNote = function(){
+        if($rootScope.currentUser){
             Note.list($rootScope.currentUser.id).success(function(notes){
                 $scope.notes = notes;
             }).error(function(err){
-            Message.createAlertError(err);
-        });;
+                Message.createAlertError(err);
+            });
         }else{
-            $state.go('/login');
+            $state.go('login');
         }
     };
     // List all note by user
-    listAllNote();
+    $scope.listAllNote();
 
     // DELETE NOTE
     $scope.deleteNote = function(id){
-        Note.delete(id).success(function(){
+        Note.delete(id).success(function(data){
             Message.createAlertSuccess('Note was deleted successful');
-            listAllNote();
+            $scope.listAllNote();
         }).error(function(err){
             Message.createAlertError(err);
         });
     };
 
 }])
-.controller('createNoteController',['$scope', '$rootScope', '$state', '$stateParams', 'Message', 'Note' , 
-    function($scope, $rootScope, $state, $stateParams, Message, Note){
+.controller('createNoteController',['$scope', '$rootScope', '$state', 'Message', 'Note' , 
+    function($scope, $rootScope, $state, Message, Note){
     // RESET FORM
     $scope.note = {};
 
@@ -58,14 +52,14 @@ angular.module('noteCtrl', [])
     function($scope, $rootScope, $stateParams, Note, Message){
     // VIEW NOTE
     var note_id = $stateParams.id;
-    var detailNote = function(id){
+    $scope.detailNote = function(id){
         Note.detail(id).success(function(note){
             $scope.note = note;
         }).error(function(err){
             Message.createAlertError(err);
         });
     };
-    detailNote(note_id);
+    $scope.detailNote(note_id);
 
     // UPDATE NOTE
     $scope.updateNote = function(){

@@ -47,8 +47,9 @@ angular.module('appRoutes', [])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
 	function($stateProvider, $urlRouterProvider, $locationProvider){
 		// 404 page
-		$urlRouterProvider.otherwise("/404");
-		$urlRouterProvider.when('/_=_', '/');
+		$urlRouterProvider.otherwise('/404');
+		// $urlRouterProvider.when('/_=_', '/');
+		$urlRouterProvider.when('/api_', '/');
 
 		$stateProvider
 		// HOMEPAGE
@@ -63,7 +64,7 @@ angular.module('appRoutes', [])
 		})
 		.state('404',
 		{
-			url: "/404",
+			url: '/404',
 			templateUrl : './views/home/404.html',
 			title: '404 - Page not found',
 			access: {
@@ -83,7 +84,7 @@ angular.module('appRoutes', [])
 		// NOTE router
 		.state('list-note',
 		{
-			url: "/list-note",
+			url: '/list-note',
 			templateUrl: "./views/note/list_note.html",
 			controller: 'listNoteController',
 			access: {
@@ -110,7 +111,6 @@ angular.module('appRoutes', [])
 			}
 		})
 		
-
 		// USER
 		.state('login', 
 		{
@@ -180,30 +180,36 @@ angular.module('baseCtrl', [])
 .controller('baseController',['$scope', '$rootScope', '$window','$cookieStore', '$state', 'User', 'Message', '$http','GetLoggedIn',
 	function($scope, $rootScope, $window, $cookieStore, $state, User, Message, $http, GetLoggedIn){
 
-	// Get login infor from node server
-    $http.get('/loggedin').success(function(data) {
-    	if (data !== '0') {
-	        $cookieStore.put('currentUser', data);
-	        $rootScope.currentUser = $cookieStore.get('currentUser');
-	        GetLoggedIn.isLogged = true;
-	        $window.sessionStorage.token = data.token;
-	    } else {
-	        $rootScope.currentUser = null;
-            GetLoggedIn.isLogged = false;
-	    }
-    }).error(function(err){
-	    $scope.createAlertError(err);
-    });
+	// Every link user clicked, system will get login infor from node server 
+    $scope.reFresh = function(){
+        $http.get('/loggedin').success(function(data) {
+        	if (data.id !== '0') {
+    	        $cookieStore.put('currentUser', data);
+    	        $rootScope.currentUser = $cookieStore.get('currentUser');
+    	        GetLoggedIn.isLogged = true;
+    	        $window.sessionStorage.token = data.token;
+    	    } else {
+    	        $rootScope.currentUser = null;
+                GetLoggedIn.isLogged = false;
+    	    }
+        }).error(function(err){
+    	    $scope.createAlertError(err);
+        });
+    };
+    $scope.reFresh();
 
 	// logout
     $scope.logout = function(){
         User.logout()
-            .success(function() {
+            .success(function(data) {
                 $rootScope.currentUser = null;
+                GetLoggedIn.isLogged = false;
                 $cookieStore.remove('currentUser');
                 delete $window.sessionStorage.token;
                 Message.createAlertSuccess('Logout successful');
                 $state.go('home');
+            }).error(function(err){
+                Message.createAlertSuccess('Logout fail! Unexpected error');
             });
     };
 
@@ -211,45 +217,39 @@ angular.module('baseCtrl', [])
 
 }]);
 angular.module('noteCtrl', [])
-.controller('listNoteController', ['$scope', '$rootScope', '$window','$cookieStore', '$state', 'Note', 'Message',
-	function($scope, $rootScope, $window, $cookieStore, $state, Note, Message){
+.controller('listNoteController', ['$scope', '$rootScope', '$state', 'Note', 'Message',
+	function($scope, $rootScope, $state, Note, Message){
 
     $scope.notes = {};
 
-    var resetMsg = function(){
-        // reset message
-        $scope.error = '';
-        $scope.success = '';
-    }   
-
     // LIST ALL NOTES
-    var listAllNote = function(){
-        if($rootScope.currentUser.id){
+    $scope.listAllNote = function(){
+        if($rootScope.currentUser){
             Note.list($rootScope.currentUser.id).success(function(notes){
                 $scope.notes = notes;
             }).error(function(err){
-            Message.createAlertError(err);
-        });;
+                Message.createAlertError(err);
+            });
         }else{
-            $state.go('/login');
+            $state.go('login');
         }
     };
     // List all note by user
-    listAllNote();
+    $scope.listAllNote();
 
     // DELETE NOTE
     $scope.deleteNote = function(id){
-        Note.delete(id).success(function(){
+        Note.delete(id).success(function(data){
             Message.createAlertSuccess('Note was deleted successful');
-            listAllNote();
+            $scope.listAllNote();
         }).error(function(err){
             Message.createAlertError(err);
         });
     };
 
 }])
-.controller('createNoteController',['$scope', '$rootScope', '$state', '$stateParams', 'Message', 'Note' , 
-    function($scope, $rootScope, $state, $stateParams, Message, Note){
+.controller('createNoteController',['$scope', '$rootScope', '$state', 'Message', 'Note' , 
+    function($scope, $rootScope, $state, Message, Note){
     // RESET FORM
     $scope.note = {};
 
@@ -270,15 +270,14 @@ angular.module('noteCtrl', [])
     function($scope, $rootScope, $stateParams, Note, Message){
     // VIEW NOTE
     var note_id = $stateParams.id;
-    var detailNote = function(id){
+    $scope.detailNote = function(id){
         Note.detail(id).success(function(note){
-            
             $scope.note = note;
         }).error(function(err){
             Message.createAlertError(err);
         });
     };
-    detailNote(note_id);
+    $scope.detailNote(note_id);
 
     // UPDATE NOTE
     $scope.updateNote = function(){
@@ -309,12 +308,16 @@ angular.module('userCtrl', [])
                     $rootScope.currentUser = $cookieStore.get('currentUser');
                     $window.sessionStorage.token = data.token;
                     GetLoggedIn.isLogged = true;
+                    
+                    // Message
                     Message.createAlertSuccess('Login successful');
-                    $state.go('home');
+                    
+                    // get back to old page or go home
+                    nextState();
                 })
                 .error(function(err) {
                     Message.createAlertError('Login fail!');
-                	GetLoggedIn.isLogged = true;
+                	GetLoggedIn.isLogged = false;
                     $state.go('login');
                 });
         }else{
@@ -337,30 +340,25 @@ angular.module('userCtrl', [])
                 });
         }
     };
+
+    var nextState = function(){
+        // if ($rootScope.oldState !== '' 
+        //     && $rootScope.oldState !== 'login' 
+        //     && $rootScope.oldState !== 'register') {
+        //     if ($rootScope.oldParam.id !== null) {
+        //         $state.go($rootScope.oldState, {
+        //             id: $rootScope.oldParam.id
+        //         });
+        //     } else {
+        //         $state.go($rootScope.oldState);
+        //     }
+        // } else {
+        //     $state.go('home');
+        // }
+
+        $state.go('home');
+    };
 	
-}])
-.controller('listUserController', ['$scope', '$rootScope', 'User', 'Message', function($scope, $rootScope, User, Message){
-	// LIST ALL USERS
-	var listAll = function(){
-	    User.list().success(function(users){
-	        $scope.users = users;
-	    });
-    };
-
-    listAll();
-
-    // DELETE USER
-    $scope.deleteUser = function(id){
-        if(id !== $rootScope.currentUser.id){
-            User.delete(id).success(function(){
-                Message.createAlertSuccess('Delete fail!');
-                listAll();
-            });
-        }else{
-            Message.createAlertError('Delete fail!');
-        }
-    };
-
 }]);
 
 
@@ -376,13 +374,13 @@ angular.module('msgService', [])
 	    createAlertSuccess : function (message) {
 	        Flash.clear();
 	        var fullmessage = '<strong> Well done!</strong> '+message;
-	        Flash.create('success', fullmessage, 5000);
+	        return Flash.create('success', fullmessage, 5000);
 	    },
 	    // ERROR MESSAGE
 	    createAlertError : function (message) {
 	        Flash.clear();
 	        var fullmessage = '<strong>Not good !</strong> '+message;
-	        Flash.create('warning', fullmessage, 5000);
+	        return Flash.create('warning', fullmessage, 5000);
 	    }
 
 	};
@@ -390,7 +388,7 @@ angular.module('msgService', [])
 }]);
 
 angular.module('noteService', [])
-.factory('Note', ['$http', '$stateParams', function($http, $stateParams) {
+.factory('Note', ['$http', function($http) {
     return {
         list: function(user_id) {
             return $http.get('/api/note/list/'+user_id);
@@ -410,7 +408,7 @@ angular.module('noteService', [])
     };
 }]);
 angular.module('userService', [])
-.factory('User', ['$http', '$stateParams', function($http, $stateParams) {
+.factory('User', ['$http', function($http) {
     return {
         login: function(userData) {
             return $http.post('/login', userData);
