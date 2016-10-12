@@ -3,8 +3,7 @@ angular.module('appRoutes', [])
 	function($stateProvider, $urlRouterProvider, $locationProvider){
 		// 404 page
 		$urlRouterProvider.otherwise('/404');
-		// $urlRouterProvider.when('/_=_', '/');
-		$urlRouterProvider.when('/api_', '/');
+    	$urlRouterProvider.when('/_=_', '/');
 
 		$stateProvider
 		// HOMEPAGE
@@ -95,8 +94,7 @@ angular.module('appRoutes', [])
 				requiredLogin: true
 			}	
 
-		})
-		;
+		});
 		
 		//remove '#!' from path
 		$locationProvider.html5Mode({

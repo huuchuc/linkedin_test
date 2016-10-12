@@ -33,8 +33,6 @@ angular.module('baseCtrl', [])
             }).error(function(err){
                 Message.createAlertSuccess('Logout fail! Unexpected error');
             });
-    };
-
-    
+    }; 
 
 }]);

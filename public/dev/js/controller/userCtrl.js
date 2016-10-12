@@ -49,27 +49,6 @@ angular.module('userCtrl', [])
     };
 
     var nextState = function(){
-        // if ($rootScope.oldState !== '' 
-        //     && $rootScope.oldState !== 'login' 
-        //     && $rootScope.oldState !== 'register') {
-        //     if ($rootScope.oldParam.id !== null) {
-        //         $state.go($rootScope.oldState, {
-        //             id: $rootScope.oldParam.id
-        //         });
-        //     } else {
-        //         $state.go($rootScope.oldState);
-        //     }
-        // } else {
-        //     $state.go('home');
-        // }
-
         $state.go('home');
     };
-	
 }]);
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-describe('appDirectives', function() {
+describe('appDirectives: Unit testing #7', function() {
 
   var scope, form;
 

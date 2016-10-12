@@ -1,5 +1,3 @@
-var express = require('express');
-
 module.exports = function(app) {
     // expose session to views
     app.use(function(req, res, next) {

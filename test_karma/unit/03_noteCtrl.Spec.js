@@ -1,4 +1,4 @@
-describe('userCtrl: Unit testing #5', function() {
+describe('userCtrl: Unit testing #3', function() {
 
 	var scope, rootScope, state, Message;
 	var Note, httpBackend;

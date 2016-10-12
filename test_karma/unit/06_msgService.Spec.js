@@ -1,4 +1,4 @@
-describe('msgService: Unit testing #1', function() {
+describe('msgService: Unit testing #6', function() {
   
   	var Message, rootScope;
 

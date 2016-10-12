@@ -1,4 +1,4 @@
-describe('noteService: Unit testing #3', function() {
+describe('noteService: Unit testing #5', function() {
 
 	var Note;
 	var httpBackend, rootScope;

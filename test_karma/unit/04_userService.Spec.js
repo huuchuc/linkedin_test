@@ -1,4 +1,4 @@
-describe('userService: Unit testing #2', function() {
+describe('userService: Unit testing #4', function() {
 
 	var User;
 	var httpBackend, rootScope;

@@ -1,4 +1,4 @@
-describe('userCtrl: Unit testing #4', function() {
+describe('userCtrl: Unit testing #2', function() {
 
 	var scope, rootScope, xwindow, cookieStore, state, Message, GetLoggedIn;
 	var userController;

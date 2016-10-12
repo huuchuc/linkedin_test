@@ -13,6 +13,6 @@ module.exports = function(app, passport) {
 
     //route all request to index.html
     app.get('*', function(req, res) {
-        res.sendfile('./public/index.html');
+        res.sendfile('public/index.html');
     });
 };

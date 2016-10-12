@@ -1,11 +1,10 @@
-var express = require('express');
-
+// middleware for authentication
 module.exports = function(req, res, next) {
 	console.log('/isLoggedIn: ');
-    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
+    // check authenticated?
     if (req.isAuthenticated())
         return next();
 
-    // IF A USER ISN'T LOGGED IN
-    return res.send(401);
+    // if not return message to screen
+    return res.json({message: 'you dont have permissions to access this url'});
 }

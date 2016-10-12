@@ -48,8 +48,7 @@ angular.module('appRoutes', [])
 	function($stateProvider, $urlRouterProvider, $locationProvider){
 		// 404 page
 		$urlRouterProvider.otherwise('/404');
-		// $urlRouterProvider.when('/_=_', '/');
-		$urlRouterProvider.when('/api_', '/');
+    	$urlRouterProvider.when('/_=_', '/');
 
 		$stateProvider
 		// HOMEPAGE
@@ -140,8 +139,7 @@ angular.module('appRoutes', [])
 				requiredLogin: true
 			}	
 
-		})
-		;
+		});
 		
 		//remove '#!' from path
 		$locationProvider.html5Mode({
@@ -211,9 +209,7 @@ angular.module('baseCtrl', [])
             }).error(function(err){
                 Message.createAlertSuccess('Logout fail! Unexpected error');
             });
-    };
-
-    
+    }; 
 
 }]);
 angular.module('noteCtrl', [])
@@ -342,31 +338,9 @@ angular.module('userCtrl', [])
     };
 
     var nextState = function(){
-        // if ($rootScope.oldState !== '' 
-        //     && $rootScope.oldState !== 'login' 
-        //     && $rootScope.oldState !== 'register') {
-        //     if ($rootScope.oldParam.id !== null) {
-        //         $state.go($rootScope.oldState, {
-        //             id: $rootScope.oldParam.id
-        //         });
-        //     } else {
-        //         $state.go($rootScope.oldState);
-        //     }
-        // } else {
-        //     $state.go('home');
-        // }
-
         $state.go('home');
     };
-	
 }]);
-
-
-
-
-
-
-
 angular.module('msgService', [])
 .factory('Message', ['Flash', function(Flash) {
 	return {
@@ -382,9 +356,7 @@ angular.module('msgService', [])
 	        var fullmessage = '<strong>Not good !</strong> '+message;
 	        return Flash.create('warning', fullmessage, 5000);
 	    }
-
 	};
-
 }]);
 
 angular.module('noteService', [])
@@ -418,27 +390,22 @@ angular.module('userService', [])
         },
         logout: function() {
             return $http.get('/logout');
-        },
-        list: function() {
-            return $http.get('/api/user/list');
-        },
-        detail: function(id) {
-            return $http.get('api/user/detail/' + id);
-        },
-        delete: function(id) {
-            return $http.delete('/api/user/delete/' + id);
         }
     };
 }])
+// Authentication service
 .factory('GetLoggedIn', function() {
     var auth = {
         isLogged: false
     };
     return auth;
 })
+// Update authentication value
 .factory('TokenInterceptor', ['$q', '$window', '$location', 'GetLoggedIn',
  function($q, $window, $location, GetLoggedIn) {
     return {
+        // On request success
+        // create token
         request: function(config) {
             config.headers = config.headers || {};
             if ($window.sessionStorage.token) {
@@ -446,12 +413,13 @@ angular.module('userService', [])
             }
             return config;
         },
-
+        // On request failure
         requestError: function(rejection) {
             return $q.reject(rejection);
         },
 
-        /* Set Authentication.isAuthenticated to true if 200 received */
+        // On response success 
+        //Set GetLoggedIn.isLogged to true if 200 received */
         response: function(response) {
             if (response !== null && response.status == 200 && $window.sessionStorage.token && !GetLoggedIn.isLogged) {
                 GetLoggedIn.isLogged = true;
@@ -459,12 +427,13 @@ angular.module('userService', [])
             return response || $q.when(response);
         },
 
-        /* Revoke client authentication if 401 is received */
+        // On response failure
+        // Revoke client if 401 is received
         responseError: function(rejection) {
             if (rejection !== null && rejection.status === 401 && ($window.sessionStorage.token || GetLoggedIn.isLogged)) {
                 delete $window.sessionStorage.token;
                 GetLoggedIn.isLogged = false;
-                $location.path("/login");
+                // $location.path("/login");
             }
 
             return $q.reject(rejection);

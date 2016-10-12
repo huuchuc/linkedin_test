@@ -51,14 +51,11 @@ routes(app, passport);
 
 
 // LAUNCH ===================
-// Sequelize
+// Sequelize sync models to db
 models.sequelize.sync().then(function () {
   	server.listen(port);
 	console.log('Server is running on '+ port);
 });
-
-// server.listen(port);
-// console.log('Server is running on '+ port);
 
 module.exports = app;
 

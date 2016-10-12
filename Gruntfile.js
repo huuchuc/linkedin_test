@@ -4,8 +4,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    // grunt.loadNpmTasks('grunt-sequelize');
-
+    grunt.loadNpmTasks('grunt-karma');
 
     // Config task
     grunt.initConfig({
@@ -39,6 +38,9 @@ module.exports = function(grunt) {
 
         // compress js file
         uglify: {
+            options: {
+                mangle: true
+            },
             production: {
                 files: {
                     './public/dist/js/min/notes.min.js': './public/dist/js/notes.js',
@@ -61,15 +63,15 @@ module.exports = function(grunt) {
             }
         },
 
-        // Create DB 
-        // sequelize: {
-        //     options: {
-        //       migrationsPath: 'db/migrations',
-        //       config: 'config/database.js'
-        //     }
-        // }
+        // test script
+        karma: {
+          unit: {
+            configFile: 'karma-unit.config.js',
+            autoWatch: true
+          }
+        },
 
-        // watchdog timer
+        // watch for changes to files
         watch: {
             // for stylesheets, watch css
             stylesheets: {
@@ -88,5 +90,6 @@ module.exports = function(grunt) {
 
     // Create task
     grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'watch']);
+    grunt.registerTask('test', ['karma']);
     
 };

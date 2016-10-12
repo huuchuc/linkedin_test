@@ -13,7 +13,5 @@ angular.module('msgService', [])
 	        var fullmessage = '<strong>Not good !</strong> '+message;
 	        return Flash.create('warning', fullmessage, 5000);
 	    }
-
 	};
-
 }]);
